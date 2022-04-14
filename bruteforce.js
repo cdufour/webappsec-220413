@@ -4,7 +4,7 @@ var passwords = ['admin', 'azerty', 'root', '1234', 'juve'];
 
 function cb(err, stdout, stderr) {
   console.log('child process run');
-  console.log(stdout)
+  console.log(stdout);
 }
 
 passwords.forEach(password => {

