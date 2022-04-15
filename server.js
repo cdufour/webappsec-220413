@@ -29,7 +29,7 @@ app.get('/', logUserAgent, (req, res) => {
 
 app.get('/login', (req, res) => {
   res.sendFile(__dirname + '/login.html');
-})
+});
 
 app.post('/login', (req, res) => {
   
@@ -41,7 +41,7 @@ app.post('/login', (req, res) => {
   }
   console.log('Request on /login with password: ' + password);
   
-})
+});
 
 app.get('/cookie', (req, res) => {
 
@@ -59,7 +59,40 @@ app.get('/cookie', (req, res) => {
   }
   res.send("Hello World");
 
-})
+});
+
+app.get('/csp', (req, res) => {
+  res.setHeader(
+    "content-security-policy",
+    "script-src 'self'"
+  );
+  res.send(`
+    <h1>Demo CSP</h1>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js""></script>
+  `);
+});
+
+app.get('/no-csp', (req, res) => {
+  res.send(`
+    <h1>Demo CSP</h1>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js""></script>
+  `);
+});
+
+app.get('/cors', (req, res) => {
+  // cors headers
+  res.setHeader("access-control-allow-origin", "*");
+  res.setHeader("access-control-allow-methods", "*");
+  
+  res.send(`
+    <h1>Demo CORS</h1>
+    <script>
+    
+    </script>
+  `);
+});
 
 
-app.listen(port, () => console.log('Serveur http @ ' + port))
+
+
+app.listen(port, () => console.log('Serveur http @ ' + port));
